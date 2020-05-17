@@ -1,0 +1,215 @@
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+    def set_data(self, data):
+        self.data = data
+
+    def get_data(self):
+        return self.data
+
+    def set_next(self, node):
+        self.next = node
+
+    def get_next(self):
+        return self.next
+
+    def has_next(self):
+        return self.next is not None
+
+
+class LinkedList:
+    def __init__(self):
+        self.length = 0
+        self.head = None
+
+    def addBeg(self, node):
+        newnode = node
+        self.length = self.length + 1
+        self.head = newnode
+
+    def addEnd(self, node):
+        currentnode = self.head
+        while currentnode.next is not None:
+            currentnode = currentnode.next
+        newnode = node
+        currentnode.set_next(newnode)
+        self.length = self.length +1
+
+    def addNode(self, node):
+        if self.length == 0:
+            self.addBeg(node)
+        else:
+            self.addEnd(node)
+
+    def add_after_value(self,data,node):
+        if self.length == 0:
+            print("List is empty!")
+        else:
+            currentnode=self.head
+            newnode=node
+            while currentnode.next is not None or currentnode.data != data:
+                if currentnode.data==data:
+                    newnode.next=currentnode.next
+                    currentnode.next=newnode
+                    self.length = self.length + 1
+                    return
+                else:
+                    currentnode=currentnode.next
+            print("Data not present in list!")
+
+    def add_at_pos(self,pos,node):
+        count=0
+        currentnode=self.head
+        prevnode=self.head
+        newnode=node
+        while currentnode.next is not None or count<pos:
+            if count+1 == pos:
+                newnode.next=prevnode.next
+                prevnode.next=newnode
+                self.length = self.length + 1
+                return
+            else:
+                prevnode=currentnode
+                currentnode=currentnode.next
+                count = count + 1
+
+    def delBeg(self):
+        if self.length==0:
+            print("List is empty!")
+            return
+
+        currentnode=self.head
+        self.head=currentnode.next
+        self.length = self.length - 1
+
+    def delLast(self):
+        currentnode=self.head
+        prevnode=self.head
+        if self.length == 0:
+            print("List is empty")
+            return
+        while currentnode.next is not None:
+            prevnode=currentnode
+            currentnode=currentnode.next
+        prevnode.next=None
+        self.length = self.length - 1
+
+    def delValue(self,data):
+        currentnode=self.head
+        prevnode=self.head
+        while currentnode.next is not None:
+            if currentnode.data == data:
+                prevnode.next=currentnode.next
+                self.length = self.length + 1
+                return
+            else:
+                prevnode=currentnode
+                currentnode=currentnode.next
+        print("Data is not present!")
+
+    def delAtPos(self,pos):
+        currentnode=self.head
+        prevnode=self.head
+        count=0
+        if pos==1:
+            self.delBeg()
+        while currentnode.next is not None:
+            if count+1 == pos:
+                prevnode.next=currentnode.next
+                self.length = self.length + 1
+                return
+            else:
+                prevnode=currentnode
+                currentnode=currentnode.next
+                count = count + 1
+        print("Given position is not present in List!")
+
+    def getLength(self):
+        return self.length
+
+    def getFirst(self):
+        if self.length==0:
+            print("There is no entry!")
+        else:
+            return self.head.data
+
+    def getLast(self):
+        if self.length==0:
+            print("There is no data")
+        else:
+            currentnode=self.head
+            while currentnode.next is not None:
+                currentnode=currentnode.next
+            return currentnode.data
+
+    def getAtPos(self,pos):
+        if self.length==0 or pos>self.length:
+            print("Invalid position!")
+            return
+        else:
+            count=0
+            currentnode=self.head
+            while count+1 != pos:
+                currentnode=currentnode.next
+                count=count+1
+            return currentnode.data
+
+    def printList(self):
+        currentnode=self.head
+        count=0
+        nodeList=[]
+        while count<self.length:
+            nodeList.append(currentnode.data)
+            currentnode=currentnode.next
+            count = count + 1
+        print(nodeList)
+
+
+node1=Node(3)
+
+node2=Node(2)
+
+node3=Node(10)
+
+node4=Node(11)
+
+l1=LinkedList()
+
+l1.addNode(node1)
+
+l1.addNode(node2)
+
+l1.addNode(node3)
+
+l1.addNode(node4)
+
+l1.printList()
+
+l1.delLast()
+
+l1.printList()
+
+l1.delBeg()
+
+l1.printList()
+
+node5=Node(15)
+
+node6=Node(7)
+
+l1.addNode(node5)
+
+l1.addNode(node6)
+
+l1.printList()
+
+a=l1.getLength()
+
+print(a)
+
+p=l1.getAtPos(3)
+
+print(p)
+
