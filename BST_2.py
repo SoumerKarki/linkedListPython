@@ -37,6 +37,34 @@ def insertTree(root,node):
             root.left=node
             return
 
+def minValNode(root):
+    current=root
+    while current is not None:
+        current=current.left
+    return current
+
+def delInTree(root,key):
+    if root is None:
+        return root
+    if key<root.key:
+        root.left=delInTree(root.left,key)
+    elif key>root.key:
+        root.right=delInTree(root.right,key)
+    else:
+        if root.left is None:
+            temp=root.right
+            root.right=None
+            return temp
+        elif root.right is None:
+            temp=root.left
+            root.left=None
+            return temp
+        temp=minValNode(root.right)
+        root.key=temp.key
+        root.right=delInTree(root.right,temp.key)
+    return root
+
+
 
 
 r=Node(50)
@@ -50,3 +78,22 @@ insertTree(r,Node(80))
 
 printInorder(r)
 
+print()
+
+print("Delete 20")
+
+r=delInTree(r,20)
+
+print()
+
+printInorder(r)
+
+print()
+
+print("Delete 30")
+
+r=delInTree(r,30)
+
+print()
+
+printInorder(r)
